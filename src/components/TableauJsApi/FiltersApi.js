@@ -11,6 +11,7 @@ import { switchSheet } from "../../helpers/switchSheet";
 import { switchTabsThenFilterThenSelectMarks } from "../../helpers/chainCalls"
 import { querySheets } from "../../helpers/query"
 import { queryDashboard } from "../../helpers/query"
+import {CocaCola} from "../../constants/url"
 // import { exportPDF } from "../../helpers/toolbar"
 
 const { tableau } = window;
@@ -21,7 +22,12 @@ function FiltersApi(props) {
   let workbook, activeSheet;
 
   const initViz = () => {
-    var url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
+    console.log("CocaCola",CocaCola);
+    let myUrl = "https://supplier-portal.buraq.bazaar-data.com/views/CocaCola/Trends2?:showAppBanner=false&:display_count=n&:showVizHome=n&:origin=viz_share_link";
+    
+    // let myUrl = "https://supplier-portal.buraq.bazaar-data.com/#/workbooks/37?:origin=card_share_link";
+    // let myUrl = "https://supplier-portal.buraq.bazaar-data.com/views/CocaCola/Map_1?:origin=card_share_link&:embed=n";
+    // var myUrl = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
     var options = {
       width: ref.offsetWidth,
       height: ref.offsetHeight,
@@ -32,7 +38,10 @@ function FiltersApi(props) {
         activeSheet = workbook.getActiveSheet();
       },
     };
-    var viz = new tableau.Viz(ref.current, url, options);
+    // querySheets(workbook, getSheetsAlertText)
+    var viz = new tableau.Viz(ref.current, myUrl, options);
+    console.log({workbook})
+
     viz.showExportPDFDialog();
 
     // viz.dispose();
@@ -40,12 +49,25 @@ function FiltersApi(props) {
     // return viz;
   };
 
+  const querySheets = (workbook, getSheetsAlertText) => {
+    console.log()
+    var sheets = workbook.getPublishedSheetsInfo();
+    // console.log("sheets",sheets);
+    // var newArr = sheets.map(function(element, index, array){
+    //   console.log("element",element.$0.name);
+    //   return element.$0.name + "\n";
+    // });
+    var text = getSheetsAlertText(sheets);
+    text = "Sheets in the workbook:\n" + text;
+    alert(text);
+  }    
+
   const exportPDF = () => {
     // var tableauVizToolbar = tableauViz();
     // console.log("!!! tableauViz", tableauVizToolbar);
     // console.log("tableau.viz",tableau.viz);
     // viz.dispose();
-    var url = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
+    var myUrl = "https://public.tableau.com/views/WorldIndicators/GDPpercapita";
     // var options = {
     //   width: ref.offsetWidth,
     //   height: ref.offsetHeight,
@@ -57,8 +79,8 @@ function FiltersApi(props) {
     //   },
     // };
     // viz.dispose();
-    // var viz = new tableau.Viz(ref.current, url, options);
-    var viz2 = new tableau.Viz(ref.current, url);
+    // var viz = new tableau.Viz(ref.current, myUrl, options);
+    var viz2 = new tableau.Viz(ref.current, myUrl);
     viz2.showExportPDFDialog();
   }    
 

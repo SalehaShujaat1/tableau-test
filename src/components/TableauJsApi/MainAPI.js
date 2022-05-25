@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FiltersApi from "./FiltersApi";
+import TrendSheet from "./TrendSheet";
 
 function MainAPI(props) {
   const [visibleSheets, setVisibleSheets] = useState([]);
@@ -7,6 +8,11 @@ function MainAPI(props) {
   const renderFiltersSheet = () => {
     console.log("!!! visibleSheets",visibleSheets);
     setVisibleSheets([...visibleSheets, <FiltersApi />]);
+  };
+
+  const renderTrendSheet = () => {
+    console.log("!!! visibleSheets",visibleSheets);
+    setVisibleSheets([...visibleSheets, <TrendSheet />]);
   };
 
   useEffect(() => {}, []);
@@ -22,7 +28,8 @@ function MainAPI(props) {
           </div>
         ))}
       </div>
-      <button onClick={renderFiltersSheet}>Show Filters Example</button>
+      {/* <button onClick={renderFiltersSheet}>Show Filters Example</button> */}
+      <button onClick={renderTrendSheet}>Show Trend Sheet Example</button>
     </div>
   );
 }
